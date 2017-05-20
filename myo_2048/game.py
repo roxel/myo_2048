@@ -45,6 +45,7 @@ class Listener(DeviceListener):
 
 
 def grid_setup():
+    print("grid setup")
     commands = {
         KEY_UP: move_up,
         KEY_DOWN: move_down,
@@ -59,14 +60,16 @@ def grid_setup():
 
 
 def myo_start():
+    print("myo start")
     init()
     listener = Listener()
     hub = Hub()
     hub.run(1000, listener)
 
     try:
+        e = threading.Event()
         while hub.running:
-            sleep(0.5)
+            e.wait(timeout=0.5)
     except KeyboardInterrupt:
         print("Goodbye")
     finally:
@@ -74,9 +77,11 @@ def myo_start():
 
 
 if __name__ == "__main__":
-    print("set grid")
-    grid_setup()
-    print("set myo")
+    grid_thread = threading.Thread(target=grid_setup())
+    grid_thread.start()
+    # myo_thread = threading.Thread(target=myo_start)
+    # myo_thread.start()
+    # grid_setup()
     myo_start()
 
 
