@@ -11,7 +11,7 @@ class GameGrid(Frame):
         self.commands = commands
 
         self.grid()
-        self.master.title('2048')
+        self.master.title('Myo 2048')
         self.master.bind("<Key>", self.key_down)
 
         self.grid_cells = []
