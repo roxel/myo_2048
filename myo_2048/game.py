@@ -24,7 +24,7 @@ class Listener(DeviceListener):
     POSE_RIGHT = libmyo.Pose.wave_out
     POSE_LEFT = libmyo.Pose.wave_in
     POSE_UP = libmyo.Pose.fingers_spread
-    POSE_DOWN = libmyo.Pose.fist
+    POSE_DOWN = libmyo.Pose.double_tap
 
     def __init__(self, game_grid):
         super(Listener, self).__init__()
