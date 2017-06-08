@@ -33,13 +33,3 @@ CELL_COLOR_DICT = {
     2048: "#f9f6f2",
 }
 FONT = ("Verdana", 40, "bold")
-
-KEY_UP_ALT = "\'\\uf700\'"
-KEY_DOWN_ALT = "\'\\uf701\'"
-KEY_LEFT_ALT = "\'\\uf702\'"
-KEY_RIGHT_ALT = "\'\\uf703\'"
-
-KEY_UP = "'w'"
-KEY_DOWN = "'s'"
-KEY_LEFT = "'a'"
-KEY_RIGHT = "'d'"
