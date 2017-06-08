@@ -1,12 +1,14 @@
 import threading
+import logging
 from myo import init, Hub, DeviceListener
 import myo as libmyo
-from time import sleep
 
 from .frame import GameGrid
 from .config import KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_UP_ALT, KEY_DOWN_ALT, KEY_LEFT_ALT, \
     KEY_RIGHT_ALT
 from .logic import move_up, move_down, move_left, move_right
+
+logger = logging.getLogger("myo2048")
 
 
 class Listener(DeviceListener):
@@ -45,7 +47,7 @@ class Listener(DeviceListener):
 
 
 def grid_setup():
-    print("grid setup")
+    logger.info("initializing game grid")
     commands = {
         KEY_UP: move_up,
         KEY_DOWN: move_down,
@@ -57,38 +59,24 @@ def grid_setup():
         KEY_RIGHT_ALT: move_right,
     }
     game_grid = GameGrid(commands)
+    return game_grid
 
 
-def myo_start():
-    print("myo start")
+def myo_setup():
+    logger.info("initializing myo")
     init()
-    listener = Listener()
-    hub = Hub()
-    hub.run(1000, listener)
-
-    try:
-        e = threading.Event()
-        while hub.running:
-            e.wait(timeout=0.5)
-    except KeyboardInterrupt:
-        print("Goodbye")
-    finally:
-        hub.shutdown()
+    return Hub(), Listener()
 
 
 if __name__ == "__main__":
-    grid_thread = threading.Thread(target=grid_setup())
-    grid_thread.start()
-    # myo_thread = threading.Thread(target=myo_start)
-    # myo_thread.start()
-    # grid_setup()
-    myo_start()
-
-
-
-
-
-
-
-
+    logger.info("starting myo_2048")
+    game_grid = grid_setup()
+    hub, listener = myo_setup()
+    try:
+        hub.run(1000, listener)
+        game_grid.mainloop()
+    except:
+        print()
+    finally:
+        hub.shutdown()
 

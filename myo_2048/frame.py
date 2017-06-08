@@ -19,8 +19,6 @@ class GameGrid(Frame):
         self.init_matrix()
         self.update_grid_cells()
 
-        self.mainloop()
-
     def init_grid(self):
         background = Frame(self, bg=BACKGROUND_COLOR_GAME, width=SIZE, height=SIZE)
         background.grid()
